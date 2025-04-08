@@ -266,20 +266,21 @@ const styles = StyleSheet.create({
 });
 ```
 
-### 4.2 Shadows in Android and iOS
+### 4.2 Shadows in Android and iOS
 
 | Android     | iOS                                           |
 | ----------- | --------------------------------------------- |
 | `elevation` | `shadowColor`, `shadowOffset`, `shadowRadius` |
 
-### 4.3 Linear gradients
+### 4.3 Linear gradients
+
 [Expo](https://docs.expo.dev/versions/latest/sdk/linear-gradient/) provides an easy way to use linear gradients. It needs to be installed with `expo install expo-linear-gradient`:
 
 ```js
 <LinearGradient colors={["red", "yellow"]}></LinearGradient>
 ```
 
-### 4.4 Background images
+### 4.4 Background images
 
 ```js
 <ImageBackground
