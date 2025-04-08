@@ -37,18 +37,19 @@ npm start
 
 To build React Native apps we should use core components provided by React Native that will be translated into native Android and iOS components:
 
-| Web browser | React Native JSX                                         | Function                                                                                                                                                                                                                                                        |
-| ----------- | -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| \<div>      | [\<View>](https://reactnative.dev/docs/view)             | Is a container that supports layout with flexbox, style, some touch handling, and accessibility controls.                                                                                                                                                       |
-| \<input>    | [\<TextInput>](https://reactnative.dev/docs/textinput)   | For inputting text into the app via a keyboard.                                                                                                                                                                                                                 |
-| \<button>   | [\<Button>](https://reactnative.dev/docs/button)         | A basic button component. **Style prop can't be applied to buttons.**                                                                                                                                                                                           |
-| \<p>        | [\<Text>](https://reactnative.dev/docs/text)             | For displaying text                                                                                                                                                                                                                                             |
-| ...         | [\<ScrollView>](https://reactnative.dev/docs/scrollview) | Wraps platform ScrollView while providing integration with touch locking "responder" system. **Keep in mind that ScrollViews must have a bounded height in order to work** [many configurations can be applied to it.](https://reactnative.dev/docs/scrollview) |
-| \<ul>       | [\<FlatList>](https://reactnative.dev/docs/flatlist)     | A performant interface for rendering basic, flat lists. **Requires "data" and "renderItem" props.**                                                                                                                                                             |
-| ...         | [\<Pressable>](https://reactnative.dev/docs/pressable)   | It is a Core Component wrapper that can detect various stages of press interactions on any of its defined children.                                                                                                                                             |
-| ...         | [\<Modal>](https://reactnative.dev/docs/modal)           | It is a basic way to present content above an enclosing view.                                                                                                                                                                                                   |
-| \<img>      | [\<Image>](https://reactnative.dev/docs/image)           | Component for displaying different types of images, including network images, static resources, temporary local images, and images from local disk.                                                                                                             |
-| ...         | ...                                                      | ...                                                                                                                                                                                                                                                             |
+| Web browser | React Native JSX                                                   | Function                                                                                                                                                                                                                                                        |
+| ----------- | ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| \<div>      | [\<View>](https://reactnative.dev/docs/view)                       | Is a container that supports layout with flexbox, style, some touch handling, and accessibility controls.                                                                                                                                                       |
+| \<input>    | [\<TextInput>](https://reactnative.dev/docs/textinput)             | For inputting text into the app via a keyboard.                                                                                                                                                                                                                 |
+| \<button>   | [\<Button>](https://reactnative.dev/docs/button)                   | A basic button component. **Style prop can't be applied to buttons.**                                                                                                                                                                                           |
+| \<p>        | [\<Text>](https://reactnative.dev/docs/text)                       | For displaying text                                                                                                                                                                                                                                             |
+| ...         | [\<ScrollView>](https://reactnative.dev/docs/scrollview)           | Wraps platform ScrollView while providing integration with touch locking "responder" system. **Keep in mind that ScrollViews must have a bounded height in order to work** [many configurations can be applied to it.](https://reactnative.dev/docs/scrollview) |
+| \<ul>       | [\<FlatList>](https://reactnative.dev/docs/flatlist)               | A performant interface for rendering basic, flat lists. **Requires "data" and "renderItem" props.**                                                                                                                                                             |
+| ...         | [\<Pressable>](https://reactnative.dev/docs/pressable)             | It is a Core Component wrapper that can detect various stages of press interactions on any of its defined children.                                                                                                                                             |
+| ...         | [\<Modal>](https://reactnative.dev/docs/modal)                     | It is a basic way to present content above an enclosing view.                                                                                                                                                                                                   |
+| \<img>      | [\<Image>](https://reactnative.dev/docs/image)                     | Component for displaying different types of images, including network images, static resources, temporary local images, and images from local disk.                                                                                                             |
+| ...         | [\<ImageBackground>](https://reactnative.dev/docs/imagebackground) | ...                                                                                                                                                                                                                                                             |
+| ...         | ...                                                                | ...                                                                                                                                                                                                                                                             |
 
 You can check all core components in this [link](https://reactnative.dev/docs/components-and-apis).
 
@@ -60,9 +61,10 @@ import { StyleSheet, Text, View } from "react-native";
 
 ### 2.3 Expo elements
 
-| Element                                                               | Function                                                                                                                                                                                             |
-| --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [\<StatusBar>](https://docs.expo.dev/versions/latest/sdk/status-bar/) | A component and imperative interface to control the app status bar to change its text color, background color, hide it, make it translucent or opaque, and apply animations to any of these changes. |
+| Element                                                                         | Function                                                                                                                                                                                             |
+| ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [\<StatusBar>](https://docs.expo.dev/versions/latest/sdk/status-bar/)           | A component and imperative interface to control the app status bar to change its text color, background color, hide it, make it translucent or opaque, and apply animations to any of these changes. |
+| [\<LinearGradient>](https://docs.expo.dev/versions/latest/sdk/linear-gradient/) | Provides a native React view that transitions between multiple colors in a linear direction. Needs to be installed with `expo install expo-linear-gradient`                                          |
 
 ### 2.4 Styling React Native apps
 
@@ -91,9 +93,9 @@ const styles = StyleSheet.create({
 });
 ```
 
-```html
-<View style="{styles.container}">
-  <Text style="{styles.text}"> Example </Text>
+```js
+<View style={styles.container}>
+  <Text style={styles.text}> Example </Text>
 </View>
 ```
 
@@ -130,11 +132,11 @@ function addGoalHandler() {
 }
 ```
 
-```html
+```js
 <TextInput
-  style="{styles.textInput}"
+  style={styles.textInput}
   placeholder="Your course goal!"
-  onChangeText="{goalInputHandler}"
+  onChangeText={goalInputHandler}
 />
 
 <button title="Add goal" onPress="{addGoalHandler}" />
@@ -197,4 +199,93 @@ Component wrapper that can detect various stages of press interactions on any of
 >
   <Text style={styles.goalText}>{text}</Text>
 </Pressable>
+```
+
+## 3. Debugging React Native Apps
+
+### 3.1 See console and network traffic in browser
+
+When starting a React Native we have an option that says `Press m │ toggle menu`. If we type `m` and in the emulator menu choose `Open JS Debugger` browser is opened and there we can see the network traffic and also the console.
+
+### 3.2 React DevTools
+
+We can install React DevTools globally:
+
+```bash
+npm install -g react-devtools
+```
+
+And to launch this application we type:
+
+```bash
+react-devtools
+```
+
+To connect the application with these tools we should open the developer menu `m` and click on `Open JS Debugger`.
+
+## 4. Deeper dive into components, layouts and styling
+
+### 4.1 Creating a custom button
+
+```js
+<View style={styles.buttonOuterContainer}>
+  <Pressable
+    onPress={pressHandler}
+    android_ripple={{ color: "#640233" }} //Touch feedback on Android
+    style={({ pressed }) =>
+      pressed
+        ? [styles.buttonInnerContainer, styles.pressed] //Touch feedback on iOS
+        : styles.buttonInnerContainer
+    }
+  >
+    <Text style={styles.buttonText}>Confirm</Text>
+  </Pressable>
+</View>
+```
+
+```js
+const styles = StyleSheet.create({
+  buttonOuterContainer: {
+    borderRadius: 28,
+    margin: 4,
+    overflow: "hidden",
+  },
+  buttonInnerContainer: {
+    backgroundColor: "#72063c",
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    elevation: 2,
+  },
+  buttonText: {
+    color: "white",
+    textAlign: "center",
+  },
+  pressed: {
+    opacity: 0.75,
+  },
+});
+```
+
+### 4.2 Shadows in Android and iOS
+
+| Android     | iOS                                           |
+| ----------- | --------------------------------------------- |
+| `elevation` | `shadowColor`, `shadowOffset`, `shadowRadius` |
+
+### 4.3 Linear gradients
+[Expo](https://docs.expo.dev/versions/latest/sdk/linear-gradient/) provides an easy way to use linear gradients. It needs to be installed with `expo install expo-linear-gradient`:
+
+```js
+<LinearGradient colors={["red", "yellow"]}></LinearGradient>
+```
+
+### 4.4 Background images
+
+```js
+<ImageBackground
+  source={require("path/to/image")}
+  resizeMode="cover"
+  style={styles.rootScreen}
+  imageStyle={styles.backgroundImage} //styles for the image
+></ImageBackground>
 ```
