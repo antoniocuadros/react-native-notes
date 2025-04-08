@@ -45,6 +45,9 @@ To build React Native apps we should use core components provided by React Nativ
 | \<p>        | [\<Text>](https://reactnative.dev/docs/text)             | For displaying text                                                                                                                                                                                                                                             |
 | ...         | [\<ScrollView>](https://reactnative.dev/docs/scrollview) | Wraps platform ScrollView while providing integration with touch locking "responder" system. **Keep in mind that ScrollViews must have a bounded height in order to work** [many configurations can be applied to it.](https://reactnative.dev/docs/scrollview) |
 | \<ul>       | [\<FlatList>](https://reactnative.dev/docs/flatlist)     | A performant interface for rendering basic, flat lists. **Requires "data" and "renderItem" props.**                                                                                                                                                             |
+| ...         | [\<Pressable>](https://reactnative.dev/docs/pressable)   | It is a Core Component wrapper that can detect various stages of press interactions on any of its defined children.                                                                                                                                             |
+| ...         | [\<Modal>](https://reactnative.dev/docs/modal)           | It is a basic way to present content above an enclosing view.                                                                                                                                                                                                   |
+| \<img>      | [\<Image>](https://reactnative.dev/docs/image)           | Component for displaying different types of images, including network images, static resources, temporary local images, and images from local disk.                                                                                                             |
 | ...         | ...                                                      | ...                                                                                                                                                                                                                                                             |
 
 You can check all core components in this [link](https://reactnative.dev/docs/components-and-apis).
@@ -55,7 +58,13 @@ To use this components, you must import them:
 import { StyleSheet, Text, View } from "react-native";
 ```
 
-### 2.2 Styling React Native apps
+### 2.3 Expo elements
+
+| Element                                                               | Function                                                                                                                                                                                             |
+| --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [\<StatusBar>](https://docs.expo.dev/versions/latest/sdk/status-bar/) | A component and imperative interface to control the app status bar to change its text color, background color, hide it, make it translucent or opaque, and apply animations to any of these changes. |
+
+### 2.4 Styling React Native apps
 
 When styling React Native applications we don't use CSS, we use some props provided by React and we can work with:
 
@@ -88,7 +97,7 @@ const styles = StyleSheet.create({
 </View>
 ```
 
-#### 2.2.1 Layouts and Flexbox
+#### 2.4.1 Layouts and Flexbox
 
 It's very similar to CSS:
 
@@ -105,7 +114,7 @@ const styles = StyleSheet.create({
 
 You can check all properties [here](https://reactnative.dev/docs/flexbox).
 
-### 2.3 Handling events
+### 2.5 Handling events
 
 Events are handled the same way as in React:
 
@@ -131,7 +140,7 @@ function addGoalHandler() {
 <button title="Add goal" onPress="{addGoalHandler}" />
 ```
 
-### 2.4 FlatList
+### 2.6 FlatList
 
 FlatLists are a performant interface for rendering basic, flat lists.
 They need at least two props:
@@ -172,4 +181,20 @@ In some cases we will not have a `key` property, but for example an `id` one, we
 
 ```js
 keyExtractor={(item, index) => { return item.id; }}
+```
+
+### 2.7 Pressable
+
+Component wrapper that can detect various stages of press interactions on any of its defined children. It has several props:
+
+- `onPress`: function to be executed when pressed.
+- `style`: function to apply some styling when the element is pressed.
+
+```html
+<Pressable
+  onPress={onDeleteItem.bind(this, id)}
+  style={({ pressed }) => pressed && styles.pressedItem}
+>
+  <Text style={styles.goalText}>{text}</Text>
+</Pressable>
 ```
