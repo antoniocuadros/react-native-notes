@@ -126,6 +126,8 @@ import { StyleSheet, Text, View } from "react-native";
 | [\<StatusBar>](https://docs.expo.dev/versions/latest/sdk/status-bar/)           | A component and imperative interface to control the app status bar to change its text color, background color, hide it, make it translucent or opaque, and apply animations to any of these changes. |
 | [\<LinearGradient>](https://docs.expo.dev/versions/latest/sdk/linear-gradient/) | Provides a native React view that transitions between multiple colors in a linear direction. Needs to be installed with `expo install expo-linear-gradient`                                          |
 | [\<AppLoading>](https://docs.expo.dev/versions/latest/sdk/app-loading/)         | A simple way to add a loading screen to your app.                                                                                                                                                    |
+| [expo-font](https://docs.expo.dev/versions/latest/sdk/font/)                    | Allows you to load custom fonts in your app. Install with `expo install expo-font`.                                                                                                                  |
+| [@expo/vector-icons](https://docs.expo.dev/guides/icons/)                       | A comprehensive icon library that comes pre-installed with Expo projects.                                                                                                                            |
 
 ### 2.4 Styling React Native apps
 
