@@ -1,5 +1,45 @@
 # React Native Guide
 
+## Index
+
+1. [Getting Started](#1-getting-started)
+   - [Creating a React Native Application](#11-creating-a-react-native-application)
+   - [Running the Application](#12-running-the-application)
+2. [React Native basics](#2-react-native-basics)
+   - [React Native components](#21-react-native-components)
+   - [Expo elements](#23-expo-elements)
+   - [Styling React Native apps](#24-styling-react-native-apps)
+     - [Layouts and Flexbox](#241-layouts-and-flexbox)
+   - [Handling events](#25-handling-events)
+   - [FlatList](#26-flatlist)
+   - [Pressable](#27-pressable)
+3. [Debugging React Native Apps](#3-debugging-react-native-apps)
+   - [See console and network traffic in browser](#31-see-console-and-network-traffic-in-browser)
+   - [React DevTools](#32-react-devtools)
+4. [Deeper dive into components, layouts and styling](#4-deeper-dive-into-components-layouts-and-styling)
+   - [Creating a custom button](#41-creating-a-custom-button)
+   - [Shadows in Android and iOS](#42-shadows-in-android-and-ios)
+   - [Linear gradients](#43-linear-gradients)
+   - [Background images](#44-background-images)
+   - [Alerts](#45-alerts)
+   - [SafeAreaView](#46-safeareaview)
+   - [Managing colors globally](#47-managing-colors-globally)
+   - [Using cascading styles](#48-using-cascading-styles)
+     - [Style arrays](#481-style-arrays)
+   - [Buttons with icons](#49-buttons-with-icons)
+     - [Using Expo Vector Icons](#491-using-expo-vector-icons)
+   - [Custom fonts](#410-custom-fonts)
+   - [Expo AppLoading](#411-expo-apploading)
+5. [Building adaptive user interfaces](#5-building-adaptive-user-interfaces)
+   - [Dimensions API](#51-dimensions-api)
+   - [Screen orientations](#52-screen-orientations)
+   - [UseWindowDimensions](#53-usewindowdimensions)
+   - [KeyboardAvoidingView](#54-keyboardavoidingview)
+   - [Adapting interface depending on Platform](#55-adapting-interface-depending-on-platform)
+     - [Using the Platform module](#551-using-the-platform-module)
+     - [Using Platform.select](#552-using-platformselect)
+   - [Styling the status bar](#56-styling-the-status-bar)
+
 ## 1. Getting Started
 
 ### 1.1 Creating a React Native Application
