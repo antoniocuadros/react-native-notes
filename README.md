@@ -1,35 +1,52 @@
-# React Native guide
+# React Native Guide
 
 ## 1. Getting Started
 
-### 1.1 Creating a React Native application:
+### 1.1 Creating a React Native Application
 
-In order to create a React Native application using "expo":
+To create a new React Native application using Expo, run:
 
 ```bash
-npx create-expo-app --template blank [proyectName]
+npx create-expo-app --template blank [projectName]
 ```
 
-### 1.2 Run application
+#### Project Structure
 
-First we need to run:
+```
+my-project/
+├── assets/          # Images, fonts, and other static files
+├── components/      # Reusable React components
+├── screens/         # Screen components
+├── App.js          # Root component
+├── package.json    # Project dependencies and scripts
+└── app.json        # Expo configuration
+```
+
+### 1.2 Running the Application
+
+1. Install dependencies:
 
 ```bash
 npm install
 ```
 
-to install all dependencies.
-
-Then we can run this command to start our project:
+2. Start the development server:
 
 ```bash
 npm start
 ```
 
-![alt text](/doc-images/section-2/2-1.jpg)
+#### Running on Simulators/Emulators
 
-- If we press `a` it will open Android app. _(You need to install Android Studio and configure an emulator first)_
-- If we press `i` it will open iOS app. _(You need to have a Mac and install xCode first)_
+- Press `i` to open iOS simulator (requires macOS and Xcode)
+- Press `a` to open Android emulator (requires Android Studio)
+- Press `w` to open in web browser
+
+#### Running on Physical Devices
+
+1. Install Expo Go app on your device
+2. Scan QR code from terminal
+3. App will load on your device
 
 ## 2. React Native basics
 
@@ -72,7 +89,7 @@ When styling React Native applications we don't use CSS, we use some props provi
 
 - Inline styling:
 
-```html
+```js
  <Text style={{margin: 16, padding: 16}} > Example </Text>
 ```
 
@@ -164,7 +181,7 @@ function addGoalHandler() {
 }
 ```
 
-```html
+```js
 <FlatList
     data={courseGoals}
     renderItem={(itemData) => {
@@ -192,7 +209,7 @@ Component wrapper that can detect various stages of press interactions on any of
 - `onPress`: function to be executed when pressed.
 - `style`: function to apply some styling when the element is pressed.
 
-```html
+```js
 <Pressable
   onPress={onDeleteItem.bind(this, id)}
   style={({ pressed }) => pressed && styles.pressedItem}
@@ -290,3 +307,24 @@ const styles = StyleSheet.create({
   imageStyle={styles.backgroundImage} //styles for the image
 ></ImageBackground>
 ```
+
+### 4.5 Alerts
+
+Alerts are used to display popup messages to the user. They're typically used for confirmations, warnings, or simple notifications.
+
+```js
+Alert.alert(
+  "Invalid number!", //title
+  "Number has to be a number between 1 and 99", //message
+  [
+    //buttons
+    {
+      text: "Ok",
+      style: "destructive",
+      onPress: resetInputHandler,
+    },
+  ]
+);
+```
+
+### 4.6 SafeAreaView
