@@ -52,23 +52,24 @@ npm start
 
 ## 2. React Native basics
 
-### 2.1 Web elements in React Native
+### 2.1 React Native components
 
 To build React Native apps we should use core components provided by React Native that will be translated into native Android and iOS components:
 
-| Web browser       | React Native JSX                                                   | Function                                                                                                                                                                                                                                                        |
-| ----------------- | ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| \<div>            | [\<View>](https://reactnative.dev/docs/view)                       | Is a container that supports layout with flexbox, style, some touch handling, and accessibility controls.                                                                                                                                                       |
-| \<input>          | [\<TextInput>](https://reactnative.dev/docs/textinput)             | For inputting text into the app via a keyboard.                                                                                                                                                                                                                 |
-| \<button>         | [\<Button>](https://reactnative.dev/docs/button)                   | A basic button component. **Style prop can't be applied to buttons.**                                                                                                                                                                                           |
-| \<p>              | [\<Text>](https://reactnative.dev/docs/text)                       | For displaying text                                                                                                                                                                                                                                             |
-| \<img>            | [\<Image>](https://reactnative.dev/docs/image)                     | Component for displaying different types of images, including network images, static resources, temporary local images, and images from local disk.                                                                                                             |
-| \<ul>, \<ol>      | [\<FlatList>](https://reactnative.dev/docs/flatlist)               | A performant interface for rendering basic, flat lists. **Requires "data" and "renderItem" props.**                                                                                                                                                             |
-| \<section> \<div> | [\<View>](https://reactnative.dev/docs/view)                       | Same as \<div> or \<section> equivalent                                                                                                                                                                                                                         |
-| ...               | [\<ScrollView>](https://reactnative.dev/docs/scrollview)           | Wraps platform ScrollView while providing integration with touch locking "responder" system. **Keep in mind that ScrollViews must have a bounded height in order to work** [many configurations can be applied to it.](https://reactnative.dev/docs/scrollview) |
-| ...               | [\<Pressable>](https://reactnative.dev/docs/pressable)             | It is a Core Component wrapper that can detect various stages of press interactions on any of its defined children.                                                                                                                                             |
-| ...               | [\<Modal>](https://reactnative.dev/docs/modal)                     | It is a basic way to present content above an enclosing view.                                                                                                                                                                                                   |
-| ...               | [\<ImageBackground>](https://reactnative.dev/docs/imagebackground) | A component that displays an image as the background for its children.                                                                                                                                                                                          |
+| Web browser       | React Native JSX                                                             | Function                                                                                                                                                                                                                                                        |
+| ----------------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| \<div>            | [\<View>](https://reactnative.dev/docs/view)                                 | Is a container that supports layout with flexbox, style, some touch handling, and accessibility controls.                                                                                                                                                       |
+| \<input>          | [\<TextInput>](https://reactnative.dev/docs/textinput)                       | For inputting text into the app via a keyboard.                                                                                                                                                                                                                 |
+| \<button>         | [\<Button>](https://reactnative.dev/docs/button)                             | A basic button component. **Style prop can't be applied to buttons.**                                                                                                                                                                                           |
+| \<p>              | [\<Text>](https://reactnative.dev/docs/text)                                 | For displaying text                                                                                                                                                                                                                                             |
+| \<img>            | [\<Image>](https://reactnative.dev/docs/image)                               | Component for displaying different types of images, including network images, static resources, temporary local images, and images from local disk.                                                                                                             |
+| \<ul>, \<ol>      | [\<FlatList>](https://reactnative.dev/docs/flatlist)                         | A performant interface for rendering basic, flat lists. **Requires "data" and "renderItem" props.**                                                                                                                                                             |
+| \<section> \<div> | [\<View>](https://reactnative.dev/docs/view)                                 | Same as \<div> or \<section> equivalent                                                                                                                                                                                                                         |
+| ...               | [\<ScrollView>](https://reactnative.dev/docs/scrollview)                     | Wraps platform ScrollView while providing integration with touch locking "responder" system. **Keep in mind that ScrollViews must have a bounded height in order to work** [many configurations can be applied to it.](https://reactnative.dev/docs/scrollview) |
+| ...               | [\<Pressable>](https://reactnative.dev/docs/pressable)                       | It is a Core Component wrapper that can detect various stages of press interactions on any of its defined children.                                                                                                                                             |
+| ...               | [\<Modal>](https://reactnative.dev/docs/modal)                               | It is a basic way to present content above an enclosing view.                                                                                                                                                                                                   |
+| ...               | [\<ImageBackground>](https://reactnative.dev/docs/imagebackground)           | A component that displays an image as the background for its children.                                                                                                                                                                                          |
+| ...               | [\<KeyboardAvoidingView>](https://reactnative.dev/docs/keyboardavoidingview) | This component will automatically adjust its height, position, or bottom padding based on the keyboard height to remain visible while the virtual keyboard is displayed.                                                                                        |
 
 You can check all core components in this [link](https://reactnative.dev/docs/components-and-apis).
 
@@ -84,6 +85,7 @@ import { StyleSheet, Text, View } from "react-native";
 | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [\<StatusBar>](https://docs.expo.dev/versions/latest/sdk/status-bar/)           | A component and imperative interface to control the app status bar to change its text color, background color, hide it, make it translucent or opaque, and apply animations to any of these changes. |
 | [\<LinearGradient>](https://docs.expo.dev/versions/latest/sdk/linear-gradient/) | Provides a native React view that transitions between multiple colors in a linear direction. Needs to be installed with `expo install expo-linear-gradient`                                          |
+| [\<AppLoading>](https://docs.expo.dev/versions/latest/sdk/app-loading/)         | A simple way to add a loading screen to your app.                                                                                                                                                    |
 
 ### 2.4 Styling React Native apps
 
@@ -516,4 +518,190 @@ export default function FontExample() {
 }
 ```
 
-## 5. Building adaptative user interfaces
+## 5. Building adaptive user interfaces
+
+### 5.1 Dimensions API
+
+The Dimensions API allows you to get the device screen dimensions and adapt your UI accordingly. This is essential for creating responsive layouts that work well across different device sizes.
+
+```jsx
+import { Dimensions, View } from "react-native";
+
+export default function DimensionsExample() {
+  // Get the window dimensions
+  const windowWidth = Dimensions.get("window").width;
+  const windowHeight = Dimensions.get("window").height;
+
+  return <View></View>;
+}
+```
+
+### 5.2 Screen orientations
+
+React Native applications can support different screen orientations. By default, most apps are set to portrait mode, but you can configure your app to support landscape mode or both orientations.
+
+You can specify which orientations your app supports in the Expo `app.json` file:
+
+```json
+{
+  "expo": {
+    "orientation": "portrait"
+    // Other configuration options...
+  }
+}
+```
+
+### 5.3 UseWindowDimensions
+
+The `useWindowDimensions` hook from the `react-native` library provides a convenient way to get the current window dimensions. This hook returns an object with `width` and `height` properties representing the current window dimensions.
+
+Unlike the Dimensions API, `useWindowDimensions` automatically updates when the screen dimensions change (such as during device rotation). This is because it's a React hook that subscribes to dimension updates and triggers re-renders when needed.
+
+**Key advantages over Dimensions API:**
+
+- Automatically responds to dimension changes without manual event listeners
+- Can be used directly within functional components
+
+```jsx
+import { useWindowDimensions, View, Text } from "react-native";
+
+export default function WindowDimensionsExample() {
+  // This hook will automatically update when dimensions change
+  const { width, height } = useWindowDimensions();
+
+  return (
+    <View>
+      <Text>Window Width: {width}</Text>
+      <Text>Window Height: {height}</Text>
+      {/* This component will automatically re-render with new dimensions */}
+      <View
+        style={{
+          width: width * 0.8,
+          height: height * 0.2,
+          backgroundColor: width > 500 ? "blue" : "red",
+        }}
+      />
+    </View>
+  );
+}
+```
+
+### 5.4 KeyboardAvoidingView
+
+The `KeyboardAvoidingView` component from the `react-native` library is designed to help prevent the keyboard from covering up parts of your UI when it appears. This is particularly useful for forms or input fields where the user might need to type in a large amount of text.
+
+```jsx
+import { KeyboardAvoidingView, TextInput, View } from "react-native";
+export default function KeyboardAvoidingViewExample() {
+  return (
+    <ScrollView>
+      <KeyboardAvoidingView behavior="padding">
+        <TextInput placeholder="Type something..." />
+        {/* Other components */}
+      </KeyboardAvoidingView>
+    </ScrollView>
+  );
+}
+```
+
+**Modes**
+
+- `height` : Adjusts the height of the container to avoid the keyboard. This is useful when you have a small form at the bottom of the screen.
+- `padding` : Adds padding to the container to avoid the keyboard. This is useful when you have a large form or a list of items.
+- `position` : Moves the container up when the keyboard appears. This is useful when you have a large form or a list of items.
+- `none` : Does not adjust the container. This is useful when you have a large form or a list of items.
+
+### 5.5 Adapting interface depending on Platform
+
+React Native provides tools to adapt your UI and logic depending on whether your app is running on iOS, Android, or Web. This is useful for handling platform-specific styles, components, or behaviors.
+
+#### 5.5.1 Using the Platform module
+
+The `Platform` module from `react-native` allows you to check the current platform and conditionally render components or styles.
+
+```jsx
+import { Platform, Text, View, StyleSheet } from "react-native";
+
+export default function PlatformExample() {
+  return (
+    <View style={styles.container}>
+      <Text>
+        {Platform.OS === "ios"
+          ? "Running on iOS"
+          : Platform.OS === "android"
+          ? "Running on Android"
+          : "Running on another platform"}
+      </Text>
+      <View
+        style={[
+          styles.box,
+          Platform.OS === "ios"
+            ? styles.iosBox
+            : Platform.OS === "android"
+            ? styles.androidBox
+            : null,
+        ]}
+      />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { alignItems: "center", marginTop: 40 },
+  box: { width: 100, height: 100, marginTop: 20 },
+  iosBox: { backgroundColor: "skyblue" },
+  androidBox: { backgroundColor: "lightgreen" },
+});
+```
+
+#### 5.5.1 Using Platform.select
+
+The Platform.select method allows you to define platform-specific values or styles in a concise way. It returns the value for the current platform, making your code cleaner and easier to maintain.
+
+```jsx
+import { Platform, StyleSheet, Text } from "react-native";
+
+export default function PlatformSelectExample() {
+  return (
+    <Text style={styles.platformText}>
+      This text size and color adapts to the platform!
+    </Text>
+  );
+}
+
+const styles = StyleSheet.create({
+  platformText: {
+    fontSize: Platform.select({
+      ios: 22,
+      android: 18,
+      default: 16,
+    }),
+    color: Platform.select({
+      ios: "navy",
+      android: "darkgreen",
+      default: "black",
+    }),
+    padding: 10,
+  },
+});
+```
+
+**Note:**
+You can use Platform.select for any value, not just styles. For example, you can select different component props or logic depending on the platform.
+
+### 5.6 Styling the status bar
+
+The status bar is the bar at the top of the screen that shows the battery level, time, and network status. You can customize the status bar by using the `StatusBar` component from the `expo-status-bar` package.
+
+```jsx
+import { StatusBar } from "expo-status-bar";
+import { View } from "react-native";
+export default function StatusBarExample() {
+  return (
+    <View>
+      <StatusBar style="light" />
+      {/* Other components */}
+    </View>
+  );
+}
+```
