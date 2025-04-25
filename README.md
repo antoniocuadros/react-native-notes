@@ -60,19 +60,19 @@ To build React Native apps we should use core components provided by React Nativ
 | \<input>    | [\<TextInput>](https://reactnative.dev/docs/textinput)             | For inputting text into the app via a keyboard.                                                                                                                                                                                                                 |
 | \<button>   | [\<Button>](https://reactnative.dev/docs/button)                   | A basic button component. **Style prop can't be applied to buttons.**                                                                                                                                                                                           |
 | \<p>        | [\<Text>](https://reactnative.dev/docs/text)                       | For displaying text                                                                                                                                                                                                                                             |
+| \<img>      | [\<Image>](https://reactnative.dev/docs/image)                     | Component for displaying different types of images, including network images, static resources, temporary local images, and images from local disk.                                                                                                             |
+| \<ul>, \<ol>| [\<FlatList>](https://reactnative.dev/docs/flatlist)               | A performant interface for rendering basic, flat lists. **Requires "data" and "renderItem" props.**                                                                                                                                                             |
+| \<section>  | [\<View>](https://reactnative.dev/docs/view)                       | Same as \<div> equivalent                                                                                                                                                                                                                                       |
 | ...         | [\<ScrollView>](https://reactnative.dev/docs/scrollview)           | Wraps platform ScrollView while providing integration with touch locking "responder" system. **Keep in mind that ScrollViews must have a bounded height in order to work** [many configurations can be applied to it.](https://reactnative.dev/docs/scrollview) |
-| \<ul>       | [\<FlatList>](https://reactnative.dev/docs/flatlist)               | A performant interface for rendering basic, flat lists. **Requires "data" and "renderItem" props.**                                                                                                                                                             |
 | ...         | [\<Pressable>](https://reactnative.dev/docs/pressable)             | It is a Core Component wrapper that can detect various stages of press interactions on any of its defined children.                                                                                                                                             |
 | ...         | [\<Modal>](https://reactnative.dev/docs/modal)                     | It is a basic way to present content above an enclosing view.                                                                                                                                                                                                   |
-| \<img>      | [\<Image>](https://reactnative.dev/docs/image)                     | Component for displaying different types of images, including network images, static resources, temporary local images, and images from local disk.                                                                                                             |
-| ...         | [\<ImageBackground>](https://reactnative.dev/docs/imagebackground) | ...                                                                                                                                                                                                                                                             |
-| ...         | ...                                                                | ...                                                                                                                                                                                                                                                             |
+| ...         | [\<ImageBackground>](https://reactnative.dev/docs/imagebackground) | A component that displays an image as the background for its children.                                                                                                                                                                                          |
 
 You can check all core components in this [link](https://reactnative.dev/docs/components-and-apis).
 
 To use this components, you must import them:
 
-```js
+```jsxx
 import { StyleSheet, Text, View } from "react-native";
 ```
 
@@ -89,13 +89,13 @@ When styling React Native applications we don't use CSS, we use some props provi
 
 - Inline styling:
 
-```js
+```jsx
  <Text style={{margin: 16, padding: 16}} > Example </Text>
 ```
 
 - StyleSheet Objects: First we need to define a style and then apply it to a component:
 
-```js
+```jsx
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
 });
 ```
 
-```js
+```jsx
 <View style={styles.container}>
   <Text style={styles.text}> Example </Text>
 </View>
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
 
 It's very similar to CSS:
 
-```js
+```jsx
 const styles = StyleSheet.create({
   inputContainer: {
     flexDirection: "row",
@@ -137,7 +137,7 @@ You can check all properties [here](https://reactnative.dev/docs/flexbox).
 
 Events are handled the same way as in React:
 
-```js
+```jsx
 const [enteredGoalText, setEnteredGoalText] = useState("");
 
 function goalInputHandler(enteredText) {
@@ -149,7 +149,7 @@ function addGoalHandler() {
 }
 ```
 
-```js
+```jsx
 <TextInput
   style={styles.textInput}
   placeholder="Your course goal!"
@@ -169,7 +169,7 @@ They need at least two props:
 
 **FlatLists needs the data to have a `key` property:**
 
-```js
+```jsx
 function addGoalHandler() {
   setCourseGoals((currentCourseGoals) => [
     ...currentCourseGoals,
@@ -181,7 +181,7 @@ function addGoalHandler() {
 }
 ```
 
-```js
+```jsx
 <FlatList
     data={courseGoals}
     renderItem={(itemData) => {
@@ -198,7 +198,7 @@ function addGoalHandler() {
 
 In some cases we will not have a `key` property, but for example an `id` one, we can use that unique property this way:
 
-```js
+```jsx
 keyExtractor={(item, index) => { return item.id; }}
 ```
 
@@ -209,7 +209,7 @@ Component wrapper that can detect various stages of press interactions on any of
 - `onPress`: function to be executed when pressed.
 - `style`: function to apply some styling when the element is pressed.
 
-```js
+```jsx
 <Pressable
   onPress={onDeleteItem.bind(this, id)}
   style={({ pressed }) => pressed && styles.pressedItem}
@@ -244,7 +244,7 @@ To connect the application with these tools we should open the developer menu `m
 
 ### 4.1 Creating a custom button
 
-```js
+```jsx
 <View style={styles.buttonOuterContainer}>
   <Pressable
     onPress={pressHandler}
@@ -260,7 +260,7 @@ To connect the application with these tools we should open the developer menu `m
 </View>
 ```
 
-```js
+```jsx
 const styles = StyleSheet.create({
   buttonOuterContainer: {
     borderRadius: 28,
@@ -293,13 +293,13 @@ const styles = StyleSheet.create({
 
 [Expo](https://docs.expo.dev/versions/latest/sdk/linear-gradient/) provides an easy way to use linear gradients. It needs to be installed with `expo install expo-linear-gradient`:
 
-```js
+```jsx
 <LinearGradient colors={["red", "yellow"]}></LinearGradient>
 ```
 
 ### 4.4 Background images
 
-```js
+```jsx
 <ImageBackground
   source={require("path/to/image")}
   resizeMode="cover"
@@ -312,7 +312,7 @@ const styles = StyleSheet.create({
 
 Alerts are used to display popup messages to the user. They're typically used for confirmations, warnings, or simple notifications.
 
-```js
+```jsx
 Alert.alert(
   "Invalid number!", //title
   "Number has to be a number between 1 and 99", //message
@@ -328,3 +328,17 @@ Alert.alert(
 ```
 
 ### 4.6 SafeAreaView
+
+SafeAreaView is a component that automatically applies padding to ensure content is not obscured by the device's notch, status bar, or home indicator.
+
+```jsxx
+import { SafeAreaView } from 'react-native';
+
+export default function App() {
+  return (
+    <SafeAreaView style={styles.container}>
+      {/* Your app content */}
+    </SafeAreaView>
+  );
+}
+```
