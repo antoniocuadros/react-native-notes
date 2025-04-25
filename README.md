@@ -56,19 +56,19 @@ npm start
 
 To build React Native apps we should use core components provided by React Native that will be translated into native Android and iOS components:
 
-| Web browser | React Native JSX                                                   | Function                                                                                                                                                                                                                                                        |
-| ----------- | ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| \<div>      | [\<View>](https://reactnative.dev/docs/view)                       | Is a container that supports layout with flexbox, style, some touch handling, and accessibility controls.                                                                                                                                                       |
-| \<input>    | [\<TextInput>](https://reactnative.dev/docs/textinput)             | For inputting text into the app via a keyboard.                                                                                                                                                                                                                 |
-| \<button>   | [\<Button>](https://reactnative.dev/docs/button)                   | A basic button component. **Style prop can't be applied to buttons.**                                                                                                                                                                                           |
-| \<p>        | [\<Text>](https://reactnative.dev/docs/text)                       | For displaying text                                                                                                                                                                                                                                             |
-| \<img>      | [\<Image>](https://reactnative.dev/docs/image)                     | Component for displaying different types of images, including network images, static resources, temporary local images, and images from local disk.                                                                                                             |
-| \<ul>, \<ol>| [\<FlatList>](https://reactnative.dev/docs/flatlist)               | A performant interface for rendering basic, flat lists. **Requires "data" and "renderItem" props.**                                                                                                                                                             |
-| \<section>  \<div> | [\<View>](https://reactnative.dev/docs/view)                       | Same as \<div> or \<section>        equivalent                                                                                                                                                                                                                                       |
-| ...         | [\<ScrollView>](https://reactnative.dev/docs/scrollview)           | Wraps platform ScrollView while providing integration with touch locking "responder" system. **Keep in mind that ScrollViews must have a bounded height in order to work** [many configurations can be applied to it.](https://reactnative.dev/docs/scrollview) |
-| ...         | [\<Pressable>](https://reactnative.dev/docs/pressable)             | It is a Core Component wrapper that can detect various stages of press interactions on any of its defined children.                                                                                                                                             |
-| ...         | [\<Modal>](https://reactnative.dev/docs/modal)                     | It is a basic way to present content above an enclosing view.                                                                                                                                                                                                   |
-| ...         | [\<ImageBackground>](https://reactnative.dev/docs/imagebackground) | A component that displays an image as the background for its children.                                                                                                                                                                                          |
+| Web browser       | React Native JSX                                                   | Function                                                                                                                                                                                                                                                        |
+| ----------------- | ------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| \<div>            | [\<View>](https://reactnative.dev/docs/view)                       | Is a container that supports layout with flexbox, style, some touch handling, and accessibility controls.                                                                                                                                                       |
+| \<input>          | [\<TextInput>](https://reactnative.dev/docs/textinput)             | For inputting text into the app via a keyboard.                                                                                                                                                                                                                 |
+| \<button>         | [\<Button>](https://reactnative.dev/docs/button)                   | A basic button component. **Style prop can't be applied to buttons.**                                                                                                                                                                                           |
+| \<p>              | [\<Text>](https://reactnative.dev/docs/text)                       | For displaying text                                                                                                                                                                                                                                             |
+| \<img>            | [\<Image>](https://reactnative.dev/docs/image)                     | Component for displaying different types of images, including network images, static resources, temporary local images, and images from local disk.                                                                                                             |
+| \<ul>, \<ol>      | [\<FlatList>](https://reactnative.dev/docs/flatlist)               | A performant interface for rendering basic, flat lists. **Requires "data" and "renderItem" props.**                                                                                                                                                             |
+| \<section> \<div> | [\<View>](https://reactnative.dev/docs/view)                       | Same as \<div> or \<section> equivalent                                                                                                                                                                                                                         |
+| ...               | [\<ScrollView>](https://reactnative.dev/docs/scrollview)           | Wraps platform ScrollView while providing integration with touch locking "responder" system. **Keep in mind that ScrollViews must have a bounded height in order to work** [many configurations can be applied to it.](https://reactnative.dev/docs/scrollview) |
+| ...               | [\<Pressable>](https://reactnative.dev/docs/pressable)             | It is a Core Component wrapper that can detect various stages of press interactions on any of its defined children.                                                                                                                                             |
+| ...               | [\<Modal>](https://reactnative.dev/docs/modal)                     | It is a basic way to present content above an enclosing view.                                                                                                                                                                                                   |
+| ...               | [\<ImageBackground>](https://reactnative.dev/docs/imagebackground) | A component that displays an image as the background for its children.                                                                                                                                                                                          |
 
 You can check all core components in this [link](https://reactnative.dev/docs/components-and-apis).
 
@@ -92,7 +92,7 @@ When styling React Native applications we don't use CSS, we use some props provi
 - Inline styling:
 
 ```jsx
- <Text style={{margin: 16, padding: 16}} > Example </Text>
+<Text style={{ margin: 16, padding: 16 }}> Example </Text>
 ```
 
 - StyleSheet Objects: First we need to define a style and then apply it to a component:
@@ -185,16 +185,14 @@ function addGoalHandler() {
 
 ```jsx
 <FlatList
-    data={courseGoals}
-    renderItem={(itemData) => {
-        return (
-            <View>
-                <Text style={styles.goalItem}>
-                    {itemData.item.text}
-                </Text>
-            </View>
-        );
-    }}
+  data={courseGoals}
+  renderItem={(itemData) => {
+    return (
+      <View>
+        <Text style={styles.goalItem}>{itemData.item.text}</Text>
+      </View>
+    );
+  }}
 ></FlatList>
 ```
 
@@ -334,7 +332,7 @@ Alert.alert(
 SafeAreaView is a component that automatically applies padding to ensure content is not obscured by the device's notch, status bar, or home indicator.
 
 ```jsx
-import { SafeAreaView } from 'react-native';
+import { SafeAreaView } from "react-native";
 
 export default function App() {
   return (
@@ -347,28 +345,28 @@ export default function App() {
 
 ### 4.7 Managing colors globally
 
-Managing colors globally in your React Native app helps maintain consistency and makes theme changes easier. 
+Managing colors globally in your React Native app helps maintain consistency and makes theme changes easier.
 
 Create a dedicated file to store all your app's colors:
 
 ```jsx
 // Colors.js
 export default {
-  primary: '#72063c',
-  primary600: '#640233',
-  primary800: '#4e0329',
-  accent: '#f7bc0c',
-  white: '#ffffff',
-  black: '#000000',
-  gray: '#cccccc',
-  error: '#ff0000'
+  primary: "#72063c",
+  primary600: "#640233",
+  primary800: "#4e0329",
+  accent: "#f7bc0c",
+  white: "#ffffff",
+  black: "#000000",
+  gray: "#cccccc",
+  error: "#ff0000",
 };
 ```
 
 Then import and use these colors throughout your app:
 
 ```jsx
-import Colors from '../constants/Colors';
+import Colors from "../constants/Colors";
 
 const styles = StyleSheet.create({
   container: {
@@ -378,8 +376,8 @@ const styles = StyleSheet.create({
   },
   text: {
     color: Colors.white,
-    fontWeight: 'bold',
-  }
+    fontWeight: "bold",
+  },
 });
 ```
 
@@ -390,19 +388,23 @@ In React Native, you can apply multiple styles to a component by using an array 
 #### 4.8.1 Style arrays
 
 ```jsx
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from "react-native";
 
 export default function StyleArrayExample() {
   return (
-    <View style={[
-      styles.container,          // Applied first
-      styles.containerWithBorder, // Overrides conflicting properties from container
-      { backgroundColor: 'lightblue' } // Overrides backgroundColor from both previous styles
-    ]}>
-      <Text style={[
-        styles.text,            // Base text styles
-        styles.boldText         // Adds or overrides with font weight
-      ]}>
+    <View
+      style={[
+        styles.container, // Applied first
+        styles.containerWithBorder, // Overrides conflicting properties from container
+        { backgroundColor: "lightblue" }, // Overrides backgroundColor from both previous styles
+      ]}
+    >
+      <Text
+        style={[
+          styles.text, // Base text styles
+          styles.boldText, // Adds or overrides with font weight
+        ]}
+      >
         Hello World
       </Text>
     </View>
@@ -412,22 +414,22 @@ export default function StyleArrayExample() {
 const styles = StyleSheet.create({
   container: {
     padding: 20,
-    backgroundColor: 'white',
-    alignItems: 'center'
+    backgroundColor: "white",
+    alignItems: "center",
   },
   containerWithBorder: {
-    backgroundColor: 'beige',
+    backgroundColor: "beige",
     borderWidth: 2,
-    borderColor: 'navy',
-    borderRadius: 8
+    borderColor: "navy",
+    borderRadius: 8,
   },
   text: {
     fontSize: 16,
-    color: 'black'
+    color: "black",
   },
   boldText: {
-    fontWeight: 'bold'
-  }
+    fontWeight: "bold",
+  },
 });
 ```
 
@@ -440,12 +442,12 @@ Expo provides a comprehensive icon library through the `@expo/vector-icons` pack
 The package comes pre-installed with Expo projects. To use icons:
 
 ```jsx
-import { Ionicons } from '@expo/vector-icons';
-import { View, Text } from 'react-native';
+import { Ionicons } from "@expo/vector-icons";
+import { View, Text } from "react-native";
 
 export default function IconExample() {
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+    <View style={{ flexDirection: "row", alignItems: "center" }}>
       <Ionicons name="heart" size={24} color="red" />
       <Text style={{ marginLeft: 8 }}>Favorite</Text>
     </View>
@@ -462,22 +464,22 @@ expo install expo-font
 ```
 
 ```jsx
-import { useFonts } from 'expo-font';
-import { View, Text } from'react-native';
+import { useFonts } from "expo-font";
+import { View, Text } from "react-native";
 export default function FontExample() {
   const [loaded] = useFonts({
-    'CustomFont-Regular': require('./assets/fonts/CustomFont-Regular.ttf'),
+    "CustomFont-Regular": require("./assets/fonts/CustomFont-Regular.ttf"),
   });
   if (!loaded) {
     return null;
   }
   return (
     <View>
-      <Text style={{ fontFamily: 'CustomFont-Regular', fontSize: 24 }}>
+      <Text style={{ fontFamily: "CustomFont-Regular", fontSize: 24 }}>
         Hello World
       </Text>
-    </View>     
-  )
+    </View>
+  );
 }
 ```
 
@@ -487,28 +489,31 @@ The code above demonstrates how to:
 2. Load a custom font by providing a name and path to the font file
 3. Check if the font has loaded before rendering the component
 4. Apply the custom font to a Text component using the fontFamily style property
-Font files should be placed in the assets/fonts directory of your project. You can use any name for the font mapping, but it's common to use the actual font name.
+   Font files should be placed in the assets/fonts directory of your project. You can use any name for the font mapping, but it's common to use the actual font name.
 
 ### 4.11 Expo AppLoading
+
 Expo provides a simple way to add a loading screen to your app.
 
 ```jsx
-import { useFonts } from 'expo-font';
-import { AppLoading } from 'expo';
-import { View, Text } from'react-native';
+import { useFonts } from "expo-font";
+import { AppLoading } from "expo";
+import { View, Text } from "react-native";
 export default function FontExample() {
   const [loaded] = useFonts({
-    'CustomFont-Regular': require('./assets/fonts/CustomFont-Regular.ttf'),
+    "CustomFont-Regular": require("./assets/fonts/CustomFont-Regular.ttf"),
   });
   if (!loaded) {
     return <AppLoading />; // Show loading screen while fonts are loading;
   }
   return (
     <View>
-      <Text style={{ fontFamily: 'CustomFont-Regular', fontSize: 24 }}>
+      <Text style={{ fontFamily: "CustomFont-Regular", fontSize: 24 }}>
         Hello World
       </Text>
-    </View>     
-  )
+    </View>
+  );
 }
 ```
+
+## 5. Building adaptative user interfaces
