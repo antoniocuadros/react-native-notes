@@ -39,6 +39,20 @@
      - [Using the Platform module](#551-using-the-platform-module)
      - [Using Platform.select](#552-using-platformselect)
    - [Styling the status bar](#56-styling-the-status-bar)
+6. [React Navigation](#6-react-navigation)
+   - [Installation](#61-installation)
+   - [Navigation Container](#62-navigation-container)
+   - [Navigators](#63-navigators)
+     - [Stack Navigator](#631-stack-navigator)
+       - [Navigation inside nested navigators components](#6311-navigation-inside-nested-navigators-components)
+       - [Sending parameters to a screen](#6312-sending-parameters-to-a-screen)
+       - [Changing header properties](#6313-changing-header-properties)
+       - [native-stack vs stack](#6315-native-stack-vs-stack)
+     - [Drawer Navigator](#632-drawer-navigator)
+       - [Configuring the drawer](#6321-configuring-the-drawer)
+       - [Opening the drawer](#6322-opening-the-drawer)
+     - [Bottom Tab Navigator](#633-bottom-tab-navigator)
+     - [Nesting Navigators](#634-nesting-navigators)
 
 ## 1. Getting Started
 
