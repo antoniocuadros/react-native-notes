@@ -747,3 +747,164 @@ export default function StatusBarExample() {
   );
 }
 ```
+
+## 6. React Navigation
+
+[React Navigation](https://reactnavigation.org/) is the standard library for handling navigation and routing between screens in React Native applications. It allows you to easily create stack navigation, tab navigation, drawer menus, and nested navigation structures.
+
+### 6.1 Installation
+
+To install React Navigation and its core dependencies, run:
+
+```bash
+npm install @react-navigation/native
+```
+
+Then, install the required peer dependencies when using **_expo_**:
+
+```bash
+expo install react-native-screens react-native-safe-area-context
+```
+
+### 6.2 Navigation Container
+
+The `NavigationContainer` component is the root component for all navigation-related components. It should wrap your entire app's navigation structure.
+
+```jsx
+import { NavigationContainer } from "@react-navigation/native";
+export default function App() {
+  return (
+    <NavigationContainer>{/* Your navigation structure */}</NavigationContainer>
+  );
+}
+```
+
+### 6.3 Navigators
+
+Navigators are the building blocks for navigation in React Navigation. There are three main types of navigators:
+
+- **StackNavigator**:  
+  Use a stack navigator when your app has a flow where users move forward and backward between screens, such as moving from a list to a details page and then back.  
+  _Example_: In a shopping app, users start on a product list, tap a product to see its details, and then can go back to the list.
+
+- **TabNavigator**:  
+  Use a tab navigator when your app has several main sections that users should be able to switch between quickly, usually via a bar at the bottom of the screen.  
+  _Example_: In a social media app, tabs might be used for "Feed", "Search", "Notifications", and "Profile".
+
+- **DrawerNavigator**:  
+  Use a drawer navigator when your app has a menu with many options or sections that don't fit well in a tab bar, and you want to provide access via a side menu.  
+  _Example_: In a productivity app, the drawer might contain links to "Tasks", "Calendar", "Settings", and "Help".
+
+#### 6.3.1 Stack Navigator
+
+To use the Stack Navigator, you need to install the corresponding package:
+
+```bash
+npm install @react-navigation/native-stack
+```
+
+Then, you can create a stack navigator like this:
+
+```jsx
+import { createStackNavigator } from "@react-navigation/stack";
+const Stack = createStackNavigator();
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+        <Stack.Screen name="Details" component={DetailsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+```
+
+**Explanation:**
+
+- `<Stack.Navigator>`: Manages the navigation stack and transitions between screens.
+- `<Stack.Screen>`: Each one defines a route (page) in your app. The `name` prop is used as the route name and as the default header title.
+- A header (title bar) is shown automatically by the stack navigator, displaying the screen’s name by default.
+- The default (initial) screen is the first `<Stack.Screen>` declared inside `<Stack.Navigator>` . In this example, "Home" will be the first screen shown when the app starts. The order of the `<Stack.Screen>` components determines the navigation stack's default order.
+
+And we can use the `navigation` prop to navigate between screens:
+
+```jsx
+function HomeScreen({ navigation }) {
+  return (
+    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <Text>Home Screen</Text>
+      <Button
+        title="Go to Details"
+        onPress={() => navigation.navigate("Details")}
+      />
+    </View>
+  );
+}
+```
+
+**Note:**
+The `navigation` prop is automatically passed to your screen components by the stack navigator. You can use `navigation.navigate('ScreenName')` to move to another screen.
+
+#### 6.3.1.1 Navigation inside nested navigators components
+
+Sometimes, you need to navigate from a component that is not a direct screen (for example, a button inside a custom component or a deeply nested child). In these cases, you can use the `useNavigation` hook provided by React Navigation.
+
+**Example:**
+
+```jsx
+import { useNavigation } from "@react-navigation/native";
+import { Button } from "react-native";
+
+export default function MyCustomButton() {
+  const navigation = useNavigation(); // Get the navigation object
+
+  return (
+    <Button
+      title="Go to Details"
+      onPress={() => navigation.navigate("Details")}
+    />
+  );
+}
+```
+
+This can only be used inside a child component of a screen component.
+
+#### 6.3.1.2 Sending parameters to a screen
+
+You can pass parameters to a screen when navigating to it. This is useful when you want to pass data from one screen to another.
+**Example:**
+
+```jsx
+navigation.navigate("Details", { itemId: 123 });
+```
+
+In the destination screen, you can access the parameters using the `route.params` object:
+
+```jsx
+function DetailsScreen({ route }) {
+  const itemId = route.params.itemId;
+  return <Text>Details for item {itemId}</Text>;
+}
+```
+
+Alternatively, you can use the `useRoute` hook to access the route object:
+
+```jsx
+import { useRoute } from "@react-navigation/native";
+function DetailsScreen() {
+  const route = useRoute();
+  const itemId = route.params.itemId;
+  return <Text>Details for item {itemId}</Text>;
+}
+```
+
+#### 6.3.1.3 native-stack vs stack
+
+React Navigation provides two main stack navigator implementations:
+
+- **native-stack**: Uses native navigation components under the hood (via the `react-native-screens` library). It offers better performance and smoother transitions, especially for large or complex apps. Recommended for most projects.
+- **stack**: The original JavaScript-based stack navigator (`@react-navigation/stack`). Easier to customize and works in environments where native modules are not available (like web), but transitions may be less smooth.
+
+In summary:  
+Use `native-stack` for best performance and native feel on mobile. Use `stack` if you need advanced customizations or web support.
