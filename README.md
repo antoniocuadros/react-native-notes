@@ -115,7 +115,7 @@ You can check all core components in this [link](https://reactnative.dev/docs/co
 
 To use this components, you must import them:
 
-```jsxx
+```jsx
 import { StyleSheet, Text, View } from "react-native";
 ```
 
@@ -899,7 +899,94 @@ function DetailsScreen() {
 }
 ```
 
-#### 6.3.1.3 native-stack vs stack
+#### 6.3.1.3 Changing header properties
+
+You can **_change the header title_** of a screen using the `options` prop. This is useful when you want to display a different title for a screen than its name.
+**Example:**
+
+```jsx
+<Stack.Screen
+  name="Details"
+  component={DetailsScreen}
+  options={{ title: "Item Details" }}
+/>
+```
+
+This will change the title of the "Details" screen to "Item Details".
+
+In order to change the header styles, you can use the `headerStyle` and `headerTintColor` options:
+
+```jsx
+<Stack.Screen
+  name="Details"
+  component={DetailsScreen}
+  options={{
+    headerStyle: { backgroundColor: "skyblue" },
+    headerTintColor: "white",
+    headerTitleStyle: { fontWeight: "bold" },
+    contentStyle: {
+      backgroundColor: "beige",
+      borderWidth: 2,
+      borderColor: "navy",
+      borderRadius: 8,
+    },
+  }}
+/>
+```
+
+**Note:**
+`headerStyle` is used to set the background color of the header.
+`headerTintColor` is used to set the color of the header title and back button.
+`headerTitleStyle` is used to set the style of the header title.
+`contentStyle` is used to set the style of the content area below the header.
+**Note:**
+These options can be set globally for the entire stack navigator or individually for each screen.
+
+**Setting navigation options dynamically**
+
+You can set navigation options dynamically using the `options` prop. This is useful when you want to change the header title based on the route parameters or other conditions.
+**Example:**
+
+```jsx
+<Stack.Screen
+  name="Details"
+  component={DetailsScreen}
+  options={({ route }) => ({
+    title: route.params.itemId,
+  })}
+/>
+```
+
+This will set the title of the "Details" screen to the itemId passed as a parameter.
+
+**Alternative**
+You can use the `setOptions` navigation method to set the navigation options dynamically inside of a screen component:
+
+```jsx
+const navigation = useNavigation();
+navigation.setOptions({
+  title: "Custom Title",
+});
+```
+
+This will set the title of the current screen to "Custom Title".
+
+**HeaderRight and HeaderLeft**
+You can add custom components to the header using the `headerRight` and `headerLeft` options. This is useful when you want to add buttons or other UI elements to the header.
+**Example:**
+
+```jsx
+<Stack.Screen
+  name="Details"
+  component={DetailsScreen}
+  options={{
+    headerRight: () => <Button title="Share" onPress={() => {}} />,
+    headerLeft: () => <Button title="Back" onPress={() => {}} />,
+  }}
+/>
+```
+
+#### 6.3.1.5 native-stack vs stack
 
 React Navigation provides two main stack navigator implementations:
 
@@ -908,3 +995,161 @@ React Navigation provides two main stack navigator implementations:
 
 In summary:  
 Use `native-stack` for best performance and native feel on mobile. Use `stack` if you need advanced customizations or web support.
+
+#### 6.3.2 Drawer Navigator
+
+To use the Drawer Navigator, you need to install the corresponding package:
+
+```bash
+npm install @react-navigation/drawer
+```
+
+Then, you can create a drawer navigator like this:
+
+```jsx
+import { createDrawerNavigator } from "@react-navigation/drawer";
+const Drawer = createDrawerNavigator();
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Drawer.Navigator initialRouteName="Home">
+        <Drawer.Screen name="Home" component={HomeScreen} />
+        <Drawer.Screen name="Settings" component={SettingsScreen} />
+      </Drawer.Navigator>
+    </NavigationContainer>
+  );
+}
+```
+
+**Note:**
+
+- `<Drawer.Navigator>`: Manages the drawer navigation and transitions between screens.
+- `<Drawer.Screen>`: Each one defines a route (page) in your app. The `name` prop is used as the route name and as the default header title.
+- A drawer menu (sidebar) is shown automatically by the drawer navigator, displaying the screen’s name by default.
+- The default (initial) screen is the first `<Drawer.Screen>` declared inside `<Drawer.Navigator>`. In this example, "Home" will be the first screen shown when the app starts. The order of the `<Drawer.Screen>` components determines the navigation stack's default order. Alternatively you can define an initial route name that is the name of the screen that will be shown by default when the app starts.
+
+#### 6.3.2.1 Configuring the drawer
+
+You can configure the drawer using the `options` prop. This is useful when you want to change the header title or add custom components to the header.
+**Example:**
+
+```jsx
+<Drawer.Screen
+  name="Settings"
+  component={SettingsScreen}
+  options={{
+    headerTitle: "Settings",
+    headerStyle: { backgroundColor: "skyblue" },
+    headerTintColor: "white",
+    headerTitleStyle: { fontWeight: "bold" },
+    contentStyle: {
+      backgroundColor: "beige",
+      borderWidth: 2,
+      borderColor: "navy",
+      borderRadius: 8,
+    },
+    drawerLabel: "Settings",
+    drawerIcon: ({ color, size }) => (
+      <MaterialCommunityIcons name="settings" color={color} size={size} />
+    ),
+    headerRight: () => <Button title="Share" onPress={() => {}} />,
+    headerLeft: () => <Button title="Back" onPress={() => {}} />,
+  }}
+/>
+```
+
+**Note:**
+`headerStyle` is used to set the background color of the header.
+`headerTintColor` is used to set the color of the header title and back button.
+`headerTitleStyle` is used to set the style of the header title.
+`contentStyle` is used to set the style of the content area below the header.
+`drawerLabel` is used to set the label of the drawer item.
+`drawerIcon` is used to set the icon of the drawer item.
+`headerRight` is used to add a custom component to the right side of the header.
+`headerLeft` is used to add a custom component to the left side of the header.
+
+#### 6.3.2.2 Opening the drawer
+
+You can also open the drawer programmatically using the `openDrawer` method:
+
+```jsx
+const navigation = useNavigation();
+navigation.openDrawer();
+```
+
+This will open the drawer.
+
+#### 6.3.3 Bottom Tab Navigator
+
+To use the Bottom Tab Navigator, you need to install the corresponding package:
+
+```bash
+npm install @react-navigation/bottom-tabs
+```
+
+Then, you can create a bottom tab navigator like this:
+
+```jsx
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+const Tab = createBottomTabNavigator();
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Tab.Navigator>
+        <Tab.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons name="home" color={color} size={size} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Settings"
+          component={SettingsScreen}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <MaterialCommunityIcons
+                name="settings"
+                color={color}
+                size={size}
+              />
+            ),
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+}
+```
+
+#### 6.3.4 Nesting Navigators
+
+You can also nest navigators inside each other. This is useful when you want to create a complex navigation structure.
+**Example:**
+
+```jsx
+import { createStackNavigator } from "@react-navigation/stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
+function DrawerNavigator() {
+  return (
+    <Drawer.Navigator>
+      <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen name="Settings" component={SettingsScreen} />
+    </Drawer.Navigator>
+  );
+}
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Profile" component={DrawerNavigator} />
+        <Stack.Screen name="Settings" component={SettingsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
+```
