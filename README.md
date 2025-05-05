@@ -1337,3 +1337,123 @@ function MealDetailScreen() {
   }
 }
 ```
+
+## 8. Handling user input
+
+We can use the `TextInput` component to handle user input. But also we can create a custom component to handle user input.
+
+```jsx
+import { TextInput } from "react-native";
+import { View, Text } from "react-native";
+
+function Input({ label, textInputConfig }) {
+  return (
+    <View>
+      <Text>{label}</Text>
+      <TextInput {...textInputConfig} />
+    </View>
+  );
+}
+
+export default Input;
+```
+
+And then we can use it like this:
+
+```jsx
+<Input
+  label="Amount"
+  textInputConfig={{
+    keyboardType: "decimal-pad",
+    onChangeText= amountChangedHandler,
+  }}
+/>
+
+<Input
+  label="Date"
+  textInputConfig={{
+    placeholder: "DD/MM/YYYY",
+    onChangeText= () => {},
+  }}
+/>
+```
+
+**Handling user input in a generic way**
+**_Note:_** In React Native when you fetch an input value, it always returns a string.
+
+We could manage user input using a state for each input:
+
+```jsx
+function ExpenseForm() {
+  const [enteredAmount, setEnteredAmount] = useState(""); // string
+  const [enteredDate, setEnteredDate] = useState(""); // string
+
+  //connected to onChangeText, it will receive a string
+  function amountChangedHandler(amount) {
+    setEnteredAmount(amount);
+  }
+
+  function dateChangedHandler(date) {
+    setEnteredDate(date);
+  }
+
+  return (
+    <View>
+      <Input
+        label="Amount"
+        textInputConfig={{
+          keyboardType: "decimal-pad",
+          onChangeText: amountChangedHandler,
+          value: enteredAmount, // set the value of the input to the enteredAmount state
+        }}
+      />
+      <Input
+        label="Date"
+        textInputConfig={{
+          placeholder: "DD/MM/YYYY",
+          onChangeText: dateChangedHandler,
+        }}
+      />
+    </View>
+  );
+}
+```
+
+But also we can use a single state for all the inputs:
+
+```jsx
+function ExpenseForm() {
+  const [inputValues, setInputValues] = useState({
+    amount: "",
+    date: "",
+  });
+
+  function inputChangeHandler(inputIdentifier, inputValue) {
+    setInputValues((prevState) => {
+      return {
+        ...prevState,
+        [inputIdentifier]: inputValue,
+      };
+    });
+  }
+  return (
+    <View>
+      <Input
+        label="Amount"
+        textInputConfig={{
+          keyboardType: "decimal-pad",
+          onChangeText: (amount) => inputChangeHandler("amount", amount),
+          value: inputValues.amount,
+        }}
+      />
+      <Input
+        label="Date"
+        textInputConfig={{
+          placeholder: "DD/MM/YYYY",
+          onChangeText: (date) => inputChangeHandler("date", date),
+        }}
+      />
+    </View>
+  );
+}
+```
