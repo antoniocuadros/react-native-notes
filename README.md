@@ -1167,3 +1167,170 @@ export default function App() {
   );
 }
 ```
+
+## 7. App state with Redux and Context API
+
+App state is the data that your app needs to keep track of. It can include things like user preferences, app settings, and data that needs to be shared across different parts of your app.
+There are two main ways to manage app state in React Native:
+
+- **Redux**: A predictable state container for JavaScript apps. It's widely used for managing complex state in large-scale React Native apps.
+- **Context API**: A built-in way to share data between components without having to pass props through every level. It's simpler to use but less powerful than Redux.
+
+### 7.1 Context API
+
+It's common to create a store folder with a `.js` file that contains the context.
+
+**Creating the context**
+
+```jsx
+import { createContext, useReducer } from "react";
+
+// create the context and set the default values
+export const FavoritesContext = createContext({
+  ids: [],
+  addFavorite: (id) => {},
+  removeFavorite: (id) => {},
+});
+
+// create a component that will wrap the app and provide the context to all the children
+// the children are the components that will use the context
+function FavoritesContextProvider({ children }) {
+  const [favoriteMealIds, setFavoriteMealIds] = useState([]);
+
+  const addFavorite = (id) => {
+    setFavoriteMealIds((currentIds) => [...currentIds, id]);
+  };
+
+  const removeFavorite = (id) => {
+    setFavoriteMealIds((currentIds) => currentIds.filter((i) => i !== id));
+  };
+
+  const value = {
+    ids: favoriteMealIds,
+    addFavorite,
+    removeFavorite,
+  };
+
+  // the value is set so that all the children can access the ids and the functions
+  return (
+    <FavoritesContext.Provider value={value}>
+      {children}
+    </FavoritesContext.Provider>
+  );
+}
+```
+
+**Using the context**
+
+```jsx
+import { useContext } from "react";
+import { FavoritesContext } from "../store/context";
+
+function MealDetailScreen() {
+  const mealId = route.params.mealId;
+  // get the context
+  const favoriteMealCtx = useContext(FavoritesContext);
+
+  const isFavorite = favoriteMealCtx.ids.find((id) => id === mealId); // using the ids from the context
+
+  // using the functions from the context api
+  function changeFavoriteStatusHandler() {
+    if (isFavorite) {
+      favoriteMealCtx.removeFavorite(mealId);
+    } else {
+      favoriteMealCtx.addFavorite(mealId);
+    }
+  }
+}
+```
+
+### 7.2 Redux
+
+To start using Redux, you need to install redux and the redux toolkit:
+
+```bash
+npm install react-redux @reduxjs/toolkit
+```
+
+**Creating the store**
+
+```jsx
+// store.js
+import { createStore } from "@reduxjs/toolkit";
+import favoritesReducer from "./favoritesSlice";
+
+// store contains the state of the app
+const store = configureStore({
+  reducer: {
+    favoriteMeals: favoritesReducer,
+  },
+});
+```
+
+```jsx
+// favoritesSlice.js
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = {
+  ids: [],
+};
+
+const favoritesSlice = createSlice({
+  name: "favorites",
+  initialState: {
+    ids: [],
+  },
+  // the reducer is a function that takes the current state and an action and returns the new state
+  // the reducer is called when an action is dispatched
+  // the reducer is called with the current state and the action
+  // the reducer returns the new state
+  reducers: {
+    addFavorite: (state, action) => {
+      state.ids.push(action.payload.id);
+    },
+    removeFavorite: (state, action) => {
+      state.ids = state.ids.filter((id) => id !== action.payload.id);
+    },
+  },
+});
+
+export const { addFavorite, removeFavorite } = favoritesSlice.actions;
+export default favoritesSlice.reducer;
+```
+
+Then we need to wrap the app with the `Provider` component:
+
+```jsx
+import { Provider } from "react-redux";
+import store from "./store/store";
+
+export default function App() {
+  return (
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+}
+```
+
+**Using the store**
+
+```jsx
+import { useDispatch, useSelector } from "react-redux";
+import { addFavorite, removeFavorite } from "../store/favoritesSlice";
+
+function MealDetailScreen() {
+  const mealId = route.params.mealId;
+  const dispatch = useDispatch();
+  const favoriteMeals = useSelector((state) => state.favoriteMeals.ids);
+  const isFavorite = favoriteMeals.find((id) => id === mealId);
+
+  function changeFavoriteStatusHandler() {
+    if (isFavorite) {
+      dispatch(removeFavorite({ id: mealId }));
+    } else {
+      dispatch(addFavorite({ id: mealId }));
+    }
+  }
+}
+```
