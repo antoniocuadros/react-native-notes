@@ -1340,6 +1340,8 @@ function MealDetailScreen() {
 
 ## 8. Handling user input
 
+### 8.1 Custom text input
+
 We can use the `TextInput` component to handle user input. But also we can create a custom component to handle user input.
 
 ```jsx
@@ -1378,7 +1380,8 @@ And then we can use it like this:
 />
 ```
 
-**Handling user input in a generic way**
+### 8.2 Handling user input in a generic way
+
 **_Note:_** In React Native when you fetch an input value, it always returns a string.
 
 We could manage user input using a state for each input:
@@ -1451,9 +1454,73 @@ function ExpenseForm() {
         textInputConfig={{
           placeholder: "DD/MM/YYYY",
           onChangeText: (date) => inputChangeHandler("date", date),
+          value: inputValues.date,
         }}
       />
     </View>
   );
 }
+```
+
+### 8.3 Managing form state and submission
+
+In order to submit the form we added two buttons and the two handlers are passed as props:
+
+```jsx
+function ExpenseForm({ onCancel, onSubmit }) {
+  //...
+
+  //function to cast string to their types
+  function submitHandler() {
+    const expenseData = {
+      amount: +inputValues.amount,
+      date: new Date(inputValues.date),
+    };
+
+    //validations
+    const amountIsValid =
+      !isNaN(+inputValues.amount) && inputValues.amount.length > 0;
+    const dateIsValid =
+      !!inputValues.date && inputValues.date.trim().length > 0;
+
+    if (!amountIsValid || !dateIsValid) {
+      Alert.alert("Invalid input", "Please enter valid amount and date!", [
+        { text: "Okay" },
+      ]);
+      return;
+    }
+
+    onSubmit(expenseData); // pass the data to the parent component
+  }
+
+  return (
+    <View>
+      //...
+      <View>
+        <Button title="Add Expense" onPress={onSubmit} />
+        <Button title="Cancel" onPress={onCancel} />
+      </View>
+    </View>
+  );
+}
+```
+
+Now where this parent component is used we can pass the handlers:
+
+```jsx
+function addExpenseHandler(expenseData) {
+  //save to database, save to context, etc.
+  console.log(expenseData);
+}
+
+return (
+  //...
+  <ExpenseForm
+    onCancel={() => {
+      navigation.goBack();
+    }}
+    onSubmit={addExpenseHandler}
+  />
+  //...
+);
 ```
