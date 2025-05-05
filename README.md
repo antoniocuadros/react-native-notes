@@ -53,6 +53,9 @@
        - [Opening the drawer](#6322-opening-the-drawer)
      - [Bottom Tab Navigator](#633-bottom-tab-navigator)
      - [Nesting Navigators](#634-nesting-navigators)
+7. [App state with Redux and Context API](#7-app-state-with-redux-and-context-api)
+   - [Context API](#71-context-api)
+   - [Redux](#72-redux)
 
 ## 1. Getting Started
 
