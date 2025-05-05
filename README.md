@@ -56,7 +56,11 @@
 7. [App state with Redux and Context API](#7-app-state-with-redux-and-context-api)
    - [Context API](#71-context-api)
    - [Redux](#72-redux)
-
+8. [Handling user input](#8-handling-user-input)
+   - [Custom text input](#81-custom-text-input)
+   - [Handling user input in a generic way](#82-handling-user-input-in-a-generic-way)
+   - [Managing form state and submission](#83-managing-form-state-and-submission)
+   
 ## 1. Getting Started
 
 ### 1.1 Creating a React Native Application
