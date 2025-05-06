@@ -60,7 +60,14 @@
    - [Custom text input](#81-custom-text-input)
    - [Handling user input in a generic way](#82-handling-user-input-in-a-generic-way)
    - [Managing form state and submission](#83-managing-form-state-and-submission)
-   
+9. [Sending HTTP requests](#9-sending-http-requests)
+   - [Sending a POST request](#91-sending-a-post-request)
+   - [Sending a GET request](#92-sending-a-get-request)
+   - [Sending a PUT request](#93-sending-a-put-request)
+   - [Sending a DELETE request](#94-sending-a-delete-request)
+   - [Managing the Loading state and ActivityIndicator](#95-managing-the-loading-state-and-activityindicator)
+   - [Handling request errors](#96-handling-request-errors)
+
 ## 1. Getting Started
 
 ### 1.1 Creating a React Native Application
@@ -131,6 +138,9 @@ To build React Native apps we should use core components provided by React Nativ
 | ...               | [\<Modal>](https://reactnative.dev/docs/modal)                               | It is a basic way to present content above an enclosing view.                                                                                                                                                                                                   |
 | ...               | [\<ImageBackground>](https://reactnative.dev/docs/imagebackground)           | A component that displays an image as the background for its children.                                                                                                                                                                                          |
 | ...               | [\<KeyboardAvoidingView>](https://reactnative.dev/docs/keyboardavoidingview) | This component will automatically adjust its height, position, or bottom padding based on the keyboard height to remain visible while the virtual keyboard is displayed.                                                                                        |
+| ...               | [\<ActivityIndicator>](https://reactnative.dev/docs/activityindicator)       | Displays a circular loading indicator.                                                                                                                                                                                                                          |
+
+                                                                                        |
 
 You can check all core components in this [link](https://reactnative.dev/docs/components-and-apis).
 
@@ -1527,4 +1537,178 @@ return (
   />
   //...
 );
+```
+
+## 9. Sending HTTP requests
+
+To send HTTP requests in React Native, you can use the `fetch` API. But also we can use the `axios` library. To use [axios](https://github.com/axios/axios) we need to install it:
+
+```bash
+npm install axios
+```
+
+### 9.1 Sending a POST request
+
+To send a POST request, we can use the `axios.post` method.
+
+```jsx
+import axios from "axios";
+
+async function sendRequest() {
+  const response = axios.post("URL_ADDRESS.com/api", {
+    data: {
+      name: "John",
+      age: 30,
+    },
+  });
+
+  //response.data contains the data returned by the server
+  console.log(response.data);
+}
+```
+
+### 9.2 Sending a GET request
+
+To send a GET request, we can use the `axios.get` method.
+
+```jsx
+import axios from "axios";
+
+async function sendRequest() {
+  const response = await axios.get("URL_ADDRESS.com/api");
+
+  console.log(response.data);
+}
+```
+
+To use this async function we need to use the `useEffect` hook:
+
+```jsx
+//UseEffect is needed to execute the function once when the component is mounted.
+useEffect(() => {
+  async function getData() {
+    await sendRequest();
+  }
+
+  getData();
+}, []);
+```
+
+### 9.3 Sending a PUT request
+
+To send a UPDATE request, we can use the `axios.put` method.
+
+```jsx
+import axios from "axios";
+
+async function sendRequest() {
+  const response = await axios.put("URL_ADDRESS.com/api", {
+    data: {
+      name: "John",
+      age: 32,
+    },
+  });
+
+  console.log(response.data);
+}
+```
+
+### 9.4 Sending a DELETE request
+
+To send a DELETE request, we can use the `axios.delete` method.
+
+```jsx
+import axios from "axios";
+
+async function sendRequest() {
+  const response = await axios.delete("URL_ADDRESS.com/api");
+  console.log(response.data);
+}
+```
+
+### 9.5 Managing the Loading state and ActivityIndicator
+
+To show a loading indicator, we can use the `ActivityIndicator` component.
+And to show the loading indicator, we can create a `isLoading` state.
+
+```jsx
+import { ActivityIndicator } from "react-native";
+import { View } from "react-native";
+import { useState, useEffect } from "react";
+
+//we could create a component for the loading screen
+function LoadingScreen() {
+  return (
+    <View>
+      <ActivityIndicator size="large" color="#0000ff" />
+    </View>
+  );
+}
+
+function App() {
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    async function getData() {
+      setIsLoading(true);
+      await sendRequest();
+      setIsLoading(false);
+    }
+    getData();
+  }, []);
+
+  return <View>{isLoading && <LoadingScreen />}</View>;
+}
+```
+
+### 9.6 Handling request errors
+
+To handle request errors, we can use the `try-catch` statement.
+
+```jsx
+import { ActivityIndicator } from "react-native";
+import { View } from "react-native";
+import { useState, useEffect } from "react";
+
+function LoadingScreen() {
+  return (
+    <View>
+      <ActivityIndicator size="large" color="#0000ff" />
+    </View>
+  );
+}
+
+function App() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
+
+  useEffect(() => {
+    async function getData() {
+      setIsLoading(true);
+
+      try {
+        await sendRequest();
+      } catch (error) {
+        setError(error.message);
+      }
+
+      setIsLoading(false);
+    }
+
+    getData();
+  }, []);
+
+  if (error) {
+    return (
+      <View>
+        <Text>{error}</Text>
+      </View>
+    );
+  }
+  if (isLoading) {
+    return <LoadingScreen />;
+  }
+
+  return <View>{/*...*/}</View>;
+}
 ```
