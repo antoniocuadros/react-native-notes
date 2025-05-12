@@ -70,6 +70,9 @@
 
 ## 1. Getting Started
 
+This guide is based on this Udemy course: [React Native - The Practical Guide [2025]
+](https://www.udemy.com/course/react-native-the-practical-guide)
+
 ### 1.1 Creating a React Native Application
 
 To create a new React Native application using Expo, run:
@@ -1712,3 +1715,226 @@ function App() {
   return <View>{/*...*/}</View>;
 }
 ```
+
+## 10. Using native device features
+
+### 10.1 Using the camera
+
+To use the camera there are two options:
+
+1.  Use the `Camera` component from `expo-camera`
+2.  Use the `CameraRoll` component from `expo-image-picker`
+
+In this case we will use the `expo-image-picker` library. To use it, we need to install it:
+
+```bash
+npm install expo-image-picker
+```
+
+Then we need to add the permissions to the `app.json` file. We need to add this plugin to the `expo` object in the `app.json` file:
+
+```json
+{
+  "expo": {
+    "plugins": [
+      "expo-image-picker",
+      {
+        "cameraPermission": "The app needs access to your camera to take pictures"
+      }
+    ]
+  }
+}
+```
+
+### 10.1.1 Taking photos on Android
+
+To take photos on Android, we need to use the `launchCameraAsync` method from `expo-image-picker`.
+
+```jsx
+import { launchCameraAsync } as ImagePicker from "expo-image-picker";
+
+function ImagePicker() {
+  async function takePictureHandler() {
+    const image = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 0.5,
+    });
+    console.log(image);
+  }
+
+  return (
+    <View>
+      <Button title="Take Picture" onPress={takePictureHandler} />
+    </View>
+  );
+}
+
+```
+
+**Note:**
+
+- The `allowsEditing` option allows the user to crop the image.
+- The `aspect` option allows the user to select the aspect ratio of the image.
+- The `quality` option allows the user to select the quality of the image.
+
+In Android permissions are handled automatically. But in iOS we need to request the permission manually.
+
+### 10.1.2 Taking photos on iOS
+
+```jsx
+import { launchCameraAsync, useCameraPermissions, PermissionStatus } as ImagePicker from "expo-image-picker";
+
+function ImagePicker() {
+  const [cameraPermission, requestCameraPermission] = useCameraPermissions();
+
+  // Manage permissions function needed for iOS
+  async function verifyPermissions() {
+    if (cameraPermission.status === PermissionStatus.UNDETERMINED) {
+      const permissionResponse = await requestCameraPermission();
+
+      return permissionResponse.granted;
+    }
+
+    if (cameraPermission.status === PermissionStatus.DENIED) {
+      Alert.alert(
+        "Insufficient permissions!",
+        "You need to grant camera permissions to use this app.",
+        [{ text: "Okay" }]
+      );
+      return false;
+    }
+
+    return true;
+  }
+
+
+  async function takePictureHandler() {
+    // Request permissions
+    const hasPermission = await verifyPermissions();
+
+    if (!hasPermission) {
+      return;
+    }
+
+    const image = await ImagePicker.launchCameraAsync({
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 0.5,
+    });
+    console.log(image);
+  }
+
+  return (
+    <View>
+      <Button title="Take Picture" onPress={takePictureHandler} />
+    </View>
+  );
+}
+
+```
+
+**Note:**
+
+- Android has a camera emulator.
+- iOS does not have a camera emulator.
+- We need to test the app on a real device.
+
+### 10.2 Location data
+
+To get the location data, we can use the package `expo-location`. To install it, we need to run:
+
+```bash
+npm install expo-location
+```
+
+We don't need to add any permissions to the `app.json` file while using this package. It is handled automatically.
+
+#### 10.2.1 Getting the current location
+
+```jsx
+import {
+  getCurrentPositionAsync,
+  useForegroundPermissions,
+} from "expo-location";
+
+function LocationPicker() {
+  const [locationPermission, requestLocationPermission] =
+    useForegroundPermissions();
+
+  // Function to get the permissions
+  async function verifyPermissions() {
+    if (locationPermission.status === PermissionStatus.UNDETERMINED) {
+      const permissionResponse = await requestLocationPermission();
+      return permissionResponse.granted;
+    }
+    if (locationPermission.status === PermissionStatus.DENIED) {
+      Alert.alert(
+        "Insufficient permissions!",
+        "You need to grant location permissions to use this app.",
+        [{ text: "Okay" }]
+      );
+      return false;
+    }
+    return true;
+  }
+
+  // Function to get the current location
+  async function getLocationHandler() {
+    const hasPermission = await verifyPermissions();
+
+    if (!hasPermission) {
+      return;
+    }
+
+    const location = await getCurrentPositionAsync();
+    console.log(location);
+  }
+
+  return (
+    <View>
+      <Button title="Get Location" onPress={getLocationHandler} />
+    </View>
+  );
+}
+```
+
+### 10.3 Interactive maps
+
+To show interactive maps, we are going to use `react-native-maps`. To install it, we need to run:
+
+```bash
+npm install react-native-maps
+```
+
+```jsx
+import MapView, { Marker } from "react-native-maps";
+
+function Map() {
+  return (
+    <MapView
+      onPress={(event) => {
+        console.log(event.nativeEvent.coordinate);
+      }}
+      style={{ width: "100%", height: "100%" }}
+      initialRegion={{
+        latitude: 37.78825, //latitude of the center of the map
+        longitude: -122.4324, //longitude of the center of the map
+        latitudeDelta: 0.0922, //how much latitude to show on the map
+        longitudeDelta: 0.0421, //how much longitude to show on the map
+      }}
+    >
+      <Marker
+        coordinate={{
+          latitude: 37.78825,
+          longitude: -122.4324,
+        }}
+        title="My Location"
+        description="This is my current location"
+      />
+    </MapView>
+  );
+}
+```
+
+### 10.4 Embedded database with SQLite
