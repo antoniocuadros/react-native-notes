@@ -1938,3 +1938,77 @@ function Map() {
 ```
 
 ### 10.4 Embedded database with SQLite
+
+To use SQLite, we are going to use the package `expo-sqlite`. To install it, we need to run:
+
+```bash
+npm install expo-sqlite
+```
+
+```jsx
+import * as SQLite from "expo-sqlite";
+
+const database = SQLite.openDatabase("places.db");
+
+function init() {
+  const promise = new Promise((resolve, reject) => {
+    database.transaction((tx) => {
+      tx.executeSql(
+        `CREATE TABLE IF NOT EXISTS places (
+      id INTEGER PRIMARY KEY NOT NULL,
+      title TEXT NOT NULL,
+      imageUri TEXT NOT NULL,
+      address TEXT NOT NULL,
+      lat REAL NOT NULL,
+      lng REAL NOT NULL);`,
+        [], //empty array for the parameters
+        () => {
+          //success callback
+          resolve();
+        },
+        (_, error) => {
+          //error callback
+          reject(error);
+          return;
+        }
+      );
+    });
+  });
+
+  return promise;
+}
+
+function insertPlace(title, imageUri, address, lat, lng) {
+  const promise = new Promise((resolve, reject) => {
+    database.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO places (title, imageUri, address, lat, lng) VALUES (?, ?, ?, ?, ?);",
+        [title, imageUri, address, lat, lng],
+        (_, result) => {
+          resolve(result);
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+}
+
+function fetchPlaces() {
+  const promise = new Promise((resolve, reject) => {
+    database.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM places;",
+        [],
+        (_, result) => {
+          resolve(result);
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+}
+```
